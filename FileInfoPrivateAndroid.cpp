@@ -15,6 +15,7 @@
 #include "DocumentsContractDocument.h"
 #include "JniExceptionCheck.h"
 #include "DocumentFile.h"
+#include <QDebug>
 
 //----------------------------------------------------------------------
 //
@@ -267,7 +268,6 @@ QString FileInfoPrivateAndroid::type() const
 QByteArray FileInfoPrivateAndroid::readAll() const
 {
     QAndroidJniEnvironment env;
-
     if (!ContentUris::isContentUri(url().toString()))
     {
         return FileInfoPrivate::readAll();
@@ -278,6 +278,17 @@ QByteArray FileInfoPrivateAndroid::readAll() const
     {
         return QByteArray();
     }
+
+    QFile file(url().toString());
+    if (file.open(QFile::ReadOnly))
+    {
+        qDebug() << "<<<<<<<<<<<<  QFile open success" << url().toString();
+        qDebug() << "<<<<<<<<<<<<  QFile fileName" << file.fileName();
+
+        return file.readAll();
+    }
+    qDebug() << "<<<<<<<<<<<<  QFile open failed" << url().toString();
+    qDebug() << "<<<<<<<<<<<<  QFile fileName" << file.fileName();
 
     InputStream inputStream = ContentResolver(env).openInputStream(url().toString());
     if (!inputStream.isValid())
@@ -292,6 +303,8 @@ QByteArray FileInfoPrivateAndroid::readAll() const
         fileBytes.append(more);
         more = inputStream.read(1024);
     }
+
+    qDebug() << "<<<<<<<<<<<<  ContentResolver inputStream read success";
 
     inputStream.close();
 

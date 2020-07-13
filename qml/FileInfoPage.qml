@@ -283,6 +283,7 @@ Page {
         listModel.appendInfo( "filePath", fileInfo.filePath );
         listModel.appendInfo( "path", fileInfo.path );
         listModel.appendInfo( "size", fileInfo.size );
+        listModel.appendInfo( "readAll()", fileInfo.readAll().byteLength );
         listModel.appendInfo( "type", fileInfo.type );
         listModel.appendInfo( "lastModified", fileInfo.lastModified );
         listModel.appendInfo( "extra", fileInfo.extra );
