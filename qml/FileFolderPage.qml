@@ -107,6 +107,8 @@ Page {
     }
 
     Component.onCompleted: {
+        console.log("folderNames: ", fileFolder.folderNames());
+        console.log("fileNames: ", fileFolder.fileNames());
 
         for (let folderName of fileFolder.folderNames()) {
             let fileUrl = fileFolder.fileUrl(folderName);
